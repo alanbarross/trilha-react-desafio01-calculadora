@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Input from './components/Input';
 import Button from './components/Button';
 
@@ -23,11 +23,12 @@ const App = () => {
 
   const handleSumNumbers = () => {
 
-    if(firstNumber === '0'){
+    if(firstNumber === '0' && currentNumber === '0'){
         setFirstNumber(String(currentNumber));
         setCurrentNumber('0')
         setOperation('+')
     }else {
+
       const sum = Number(firstNumber) + Number(currentNumber);
       setCurrentNumber(String(sum))
       setOperation('')
@@ -42,10 +43,36 @@ const App = () => {
         setCurrentNumber('0')
         setOperation('-')
     }else {
-      const sum = Number(firstNumber) - Number(currentNumber);
-      setCurrentNumber(String(sum))
+      const minus = Number(firstNumber) - Number(currentNumber);
+      setCurrentNumber(String(minus))
       setOperation('')
     }
+
+  }
+
+  const handleMultNumbers = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0')
+      setOperation('*')
+  }else {
+    const mult = Number(firstNumber) * Number(currentNumber);
+    setCurrentNumber(String(mult))
+    setOperation('')
+  }
+
+  }
+
+  const handleDivNumbers = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0')
+      setOperation('/')
+  }else {
+    const div = Number(firstNumber) / Number(currentNumber);
+    setCurrentNumber(String(div))
+    setOperation('')
+  }
 
   }
 
@@ -59,6 +86,12 @@ const App = () => {
           case '-':
             handleMinusNumbers();
             break;
+          case '*':
+            handleMultNumbers();
+            break;
+          case '/':
+            handleDivNumbers();
+            break;
           default: 
             break;
         }
@@ -66,15 +99,21 @@ const App = () => {
 
   }
 
+  const handlePoint = () => {
+    const newNumber = String(currentNumber) + '.';
+    setCurrentNumber(newNumber);
+    setFirstNumber( newNumber);
+  }
+
   return (
     <Container>
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
+          <Button label="x" onClick={handleMultNumbers}/>
+          <Button label="/" onClick={handleDivNumbers}/>
           <Button label="c" onClick={handleOnClear}/>
-          <Button label="."/>
+          <Button label="." onClick={handlePoint}/>
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')}/>
